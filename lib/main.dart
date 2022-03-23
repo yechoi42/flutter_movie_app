@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:my_app/screen/home_screen.dart';
 import 'package:my_app/widget/bottom_bar.dart';
 
 void main() {
@@ -26,7 +27,7 @@ class _MyAppState extends State<MyApp> {
               body: TabBarView(
                   physics: NeverScrollableScrollPhysics(),
                   children: <Widget>[
-                    Container(child: Center(child: Text('Home'))),
+                    HomeScreen(),
                     Container(child: Center(child: Text('Search'))),
                     Container(child: Center(child: Text('Save'))),
                     Container(child: Center(child: Text('More')))
