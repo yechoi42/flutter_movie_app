@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:my_app/screen/home_screen.dart';
+import 'package:my_app/screen/profile_screen.dart';
 import 'package:my_app/widget/bottom_bar.dart';
 
 void main() {
@@ -30,7 +31,7 @@ class _MyAppState extends State<MyApp> {
                     HomeScreen(),
                     Container(child: Center(child: Text('Search'))),
                     Container(child: Center(child: Text('Save'))),
-                    Container(child: Center(child: Text('More')))
+                    ProfileScreen()
                   ]),
               bottomNavigationBar: Bottom(),
             )));
