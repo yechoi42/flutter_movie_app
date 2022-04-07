@@ -38,7 +38,23 @@ class ProfileScreen extends StatelessWidget {
               text: 'https://github.com/yechoi',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               linkStyle: TextStyle(color: Colors.white),
-            ))
+            )),
+        Container(
+            padding: EdgeInsets.all(10),
+            child: FlatButton(
+                onPressed: () {},
+                child: Container(
+                    color: Colors.red,
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(Icons.edit, color: Colors.white),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text('프로필 수정하기',
+                              style: TextStyle(color: Colors.white))
+                        ]))))
       ],
     )));
   }
