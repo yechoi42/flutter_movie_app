@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:my_app/model/model_movie.dart';
 import 'package:my_app/widget/box_slider.dart';
@@ -9,48 +10,27 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<Movie> movies = [
-    Movie.fromMap(
-      {
-        'title': '사랑의 불착',
-        'keyword': '사랑/로맨스/판타지',
-        'poster': 'test_movie_1.png',
-        'like': false
-      },
-    ),
-    Movie.fromMap(
-      {
-        'title': '사랑의 불착',
-        'keyword': '사랑/로맨스/판타지',
-        'poster': 'test_movie_1.png',
-        'like': false
-      },
-    ),
-    Movie.fromMap(
-      {
-        'title': '사랑의 불착',
-        'keyword': '사랑/로맨스/판타지',
-        'poster': 'test_movie_1.png',
-        'like': false
-      },
-    ),
-    Movie.fromMap(
-      {
-        'title': '사랑의 불착',
-        'keyword': '사랑/로맨스/판타지',
-        'poster': 'test_movie_1.png',
-        'like': false
-      },
-    ),
-  ];
+  Firestore firestore = Firestore.instance;
+  late Stream<QuerySnapshot> streamData;
 
   @override
   void initState() {
     super.initState();
+    streamData = firestore.collection('movie').snapshots();
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Widget _fetchData(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: Firestore.instance.collection('movie').snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) return LinearProgressIndicator();
+        return _buildBody(context, snapshot.data!.documents);
+      },
+    );
+  }
+
+  Widget _buildBody(BuildContext context, List<DocumentSnapshot> snapshot) {
+    List<Movie> movies = snapshot.map((d) => Movie.fromSnapshot(d)).toList();
     return ListView(children: <Widget>[
       Stack(children: <Widget>[
         CarouselImage(movies: movies),
@@ -59,6 +39,11 @@ class _HomeScreenState extends State<HomeScreen> {
       CircleSlider(movies: movies),
       BoxSlider(movies: movies)
     ]);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _fetchData(context);
   }
 }
 
