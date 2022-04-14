@@ -23,14 +23,14 @@ class _HomeScreenState extends State<HomeScreen> {
     return StreamBuilder<QuerySnapshot>(
       stream: Firestore.instance.collection('movie').snapshots(),
       builder: (context, snapshot) {
-        if (!snapshot.hasData) return LinearProgressIndicator();
-        return _buildBody(context, snapshot.data!.documents);
+        if (!snapshot.hasData) return Text('no data');
+        return _buildBody(context, snapshot.data?.documents);
       },
     );
   }
 
-  Widget _buildBody(BuildContext context, List<DocumentSnapshot> snapshot) {
-    List<Movie> movies = snapshot.map((d) => Movie.fromSnapshot(d)).toList();
+  Widget _buildBody(BuildContext context, List<DocumentSnapshot>? snapshot) {
+    List<Movie> movies = snapshot!.map((d) => Movie.fromSnapshot(d)).toList();
     return ListView(children: <Widget>[
       Stack(children: <Widget>[
         CarouselImage(movies: movies),
