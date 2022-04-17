@@ -21,8 +21,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _fetchData(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: streamData,
-      builder: (context, snapshot) {
+      stream: firestore.collection('movie').snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        print(snapshot.connectionState.toString());
         if (snapshot.hasData)
           return _buildBody(context, snapshot.data?.documents);
         else
